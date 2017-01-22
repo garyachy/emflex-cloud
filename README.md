@@ -1,2 +1,2 @@
-# emflex-examples
-Examples.
+# emflex-cloud
+Cloud applications.
