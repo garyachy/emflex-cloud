@@ -1,2 +1,5 @@
 # emflex-cloud
-Cloud applications.
+
+## Run
+npm install
+DEBUG=myapp:* npm start

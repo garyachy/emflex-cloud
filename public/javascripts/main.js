@@ -34,7 +34,7 @@ function populateMarkers(dataType) {
                 shopname: this.shopname,
                 details: this.details,
                 website: this.website,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
             });
     	//Build the content for InfoWindow
             var content = '<h1 class="mt0"><a href="' + marker.website + '" target="_blank" title="' + marker.shopname + '">' + marker.shopname + '</a></h1><p>' + marker.details + '</p>';
