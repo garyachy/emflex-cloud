@@ -20,7 +20,14 @@ app.io.on('connection', (socket) => {
   socket.on('disconnect', () => console.log('Client disconnected'));
 });
 
-setInterval(() => app.io.emit('time', new Date().toTimeString()), 1000);
+function getTime() {
+	var myObject = {
+	    time: new Date().toTimeString()
+	}
+    return myObject;
+}
+
+setInterval(() => app.io.emit('time', getTime()), 1000);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
