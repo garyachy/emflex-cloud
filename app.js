@@ -9,10 +9,18 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+app.io = require('socket.io')();
 
 var redis = require('redis');
 const connectionString = process.env.REDIS_URL || 'redis://localhost:6379';
 var client = redis.createClient(connectionString, {no_ready_check: true});
+
+app.io.on('connection', (socket) => {
+  console.log('Client connected');
+  socket.on('disconnect', () => console.log('Client disconnected'));
+});
+
+setInterval(() => app.io.emit('time', new Date().toTimeString()), 1000);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

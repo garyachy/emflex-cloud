@@ -7,7 +7,18 @@ MAPAPP.pathName = window.location.pathname;
 $(document).ready(function() {
     initialize();
     populateMarkers(MAPAPP.pathName);
+	displayTime();
 });
+
+//Display time
+function displayTime() {
+    var socket = io();
+    var el = document.getElementById('server-time');
+
+    socket.on('time', function(timeString) {
+      el.innerHTML = 'Server time: ' + timeString;
+    });
+};
 
 //Initialize our Google Map
 function initialize() {
