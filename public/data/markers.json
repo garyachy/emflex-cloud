@@ -9,15 +9,6 @@
 		"website": "http://www.menageriecoffee.com/"
 	},
 	{
-		"shopname": "Old City Coffee",
-		"location":{
-			"type": "Point",
-			"coordinates": [39.950712,-75.144814]
-		},
-		"details": "Great for a coffee on the go.",
-		"website": "http://www.oldcitycoffee.com/"
-	},
-	{
 		"shopname": "United By Blue",
 		"location":{
 			"type": "Point",

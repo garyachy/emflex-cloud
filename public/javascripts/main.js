@@ -7,6 +7,7 @@ MAPAPP.pathName = window.location.pathname;
 $(document).ready(function() {
     populateMarkers(MAPAPP.pathName);
 	displayTime();
+	displayMarker();
 });
 
 //Display time
@@ -16,6 +17,15 @@ function displayTime() {
 
     socket.on('time', function(timeString) {
       el.innerHTML = 'Server time: ' + timeString.time;
+    });
+};
+
+//Display marker
+function displayMarker() {
+    var socket = io();
+
+    socket.on('marker', function(marker) {
+	  createMarker(marker);
     });
 };
 
