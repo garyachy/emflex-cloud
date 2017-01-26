@@ -5,7 +5,6 @@ MAPAPP.currentInfoWindow;
 MAPAPP.pathName = window.location.pathname;
 
 $(document).ready(function() {
-    populateMarkers(MAPAPP.pathName);
 	displayTime();
 	displayMarker();
 });
@@ -20,12 +19,19 @@ function displayTime() {
     });
 };
 
+var marker_counter = 0;
+
 //Display marker
 function displayMarker() {
     var socket = io();
 
     socket.on('marker', function(marker) {
+		if(marker_counter == 0) {
+			initialize(marker.location.coordinates[0], 
+				marker.location.coordinates[1]);
+		};
 	  createMarker(marker);
+	  marker_counter++;
     });
 };
 
@@ -39,21 +45,6 @@ function initialize(lat,lng) {
     };
     this.map = new google.maps.Map(document.getElementById('map_canvas'),
         mapOptions);
-};
-
-// Fill map with markers
-function populateMarkers(dataType) {
-    apiLoc = typeof apiLoc !== 'undefined' ? apiLoc : '/data/markers.json';
-    // jQuery AJAX call for JSON
-    $.getJSON(apiLoc, function(data) {
-        //For each item in our JSON, add a new map marker
-        $.each(data, function(i, ob) {
-			if (i == 0) {
-				initialize(ob.location.coordinates[0], ob.location.coordinates[1]);
-			};
-            createMarker (ob);
-        });
-    });
 };
 
 //Create marker

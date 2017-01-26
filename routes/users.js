@@ -1,24 +1,18 @@
 var express = require('express');
+var redis = require('redis');
 var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  if (req.query.name && req.query.lat && req.query.lng) {
+  if (req.query.name && req.query.lat && req.query.lng) {	  
+	  req.app.redis.hset('Log events', req.query.name, req.query.name, redis.print);
 	  
-	  var myMarker = {
-	  	"shopname": req.query.name,
-	  	"location":{
-	  		"type": "Point",
-	  		"coordinates": [req.query.lat,req.query.lng]
-	  	},
-	  	"details": "Great for a coffee on the go.",
-	  	"website": "http://www.oldcitycoffee.com/"
-	  };
-	  
-	  req.app.io.emit('marker', myMarker); 
+	  req.app.redis.geoadd('locations', req.query.lat, req.query.lng, req.query.name, function (err) {
+	    console.log('GEOADD error ' + err);
+      });
   };
 
-  res.send('respond with a resource');
+  res.render('users', { title: 'Users' });
 });
 
 module.exports = router;
