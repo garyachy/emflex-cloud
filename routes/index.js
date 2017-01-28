@@ -7,7 +7,7 @@ function createCallback(app,marker,name) {
       app.redis.geopos('locations', name, function(err, reply) {
 		console.log('Name is ' + name);
 	    console.log('Coordinates are ' + reply);
-		marker.shopname = name;
+		marker.name = name;
 		marker.location.coordinates[0]=reply[0][0];
 		marker.location.coordinates[1]=reply[0][1];
 		app.io.emit('marker', marker);
@@ -27,13 +27,12 @@ function populateMarkers(marker, app) {
 router.get('/', function(req, res, next) {
 	
 	var myMarker = {
-		"shopname": "Test",
 		"location":{
 			"type": "Point",
 			"coordinates": [0,0]
 		},
-		"details": "Great for a coffee on the go.",
-		"website": "http://www.oldcitycoffee.com/"
+		"details": "Bicycle",
+		"website": "https://github.com/emflex"
 	};
 
 	function getTime() {

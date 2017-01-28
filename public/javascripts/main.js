@@ -48,13 +48,13 @@ function initialize(lat,lng) {
 };
 
 //Create marker
-function createMarker(shop) {
+function createMarker(object) {
     var marker = new google.maps.Marker({
         map: map,
-        position: new google.maps.LatLng(shop.location.coordinates[0], shop.location.coordinates[1]),
-        shopname: shop.shopname,
-        details: shop.details,
-        website: shop.website,
+        position: new google.maps.LatLng(object.location.coordinates[0], object.location.coordinates[1]),
+        shopname: object.name,
+        details: object.details,
+        website: object.website,
         icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
     });
 //Build the content for InfoWindow
