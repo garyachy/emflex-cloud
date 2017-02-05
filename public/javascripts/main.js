@@ -19,18 +19,49 @@ function displayTime() {
     });
 };
 
+//Display user
+function displayUser(object) {	
+	var cList = document.getElementById('users');
+    
+	var li = $('<li/>')
+    .appendTo(cList);
+	
+    var aaa = $('<a/>')
+    .text(object.name + ' was added at ' + object.timestamp)
+    .appendTo(li);
+	
+};
+
 var marker_counter = 0;
+var users_array = [];
+
+function checkArray(marker) {
+	var res = false;
+    users_array.forEach(function(entry) {
+        if (entry.name == marker.name){
+           res = true;
+        };
+    });
+	
+	return res;
+};
 
 //Display marker
 function displayMarker() {
     var socket = io();
 
     socket.on('marker', function(marker) {
+	  
+		if (checkArray(marker) == true) {return;};
+	  
 		if(marker_counter == 0) {
 			initialize(marker.location.coordinates[0], 
 				marker.location.coordinates[1]);
 		};
 	  createMarker(marker);
+	  displayUser(marker);
+	  
+	  users_array[marker_counter] = marker;
 	  marker_counter++;
     });
 };

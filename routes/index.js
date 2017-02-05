@@ -4,12 +4,19 @@ var router = express.Router();
 
 function createCallback(app,marker,name) {
     return function() {
+      app.redis.hget('Timestamps', name, function (err, reply) {
+        marker.timestamp = reply;
+	  });		
+		
       app.redis.geopos('locations', name, function(err, reply) {
 		console.log('Name is ' + name);
 	    console.log('Coordinates are ' + reply);
 		marker.name = name;
-		marker.location.coordinates[0]=reply[0][0];
-		marker.location.coordinates[1]=reply[0][1];
+		
+		if (reply[0] != null) {
+		    marker.location.coordinates[0]=reply[0][0];
+		    marker.location.coordinates[1]=reply[0][1];
+	    }
 		app.io.emit('marker', marker);
       });
     }
@@ -32,7 +39,8 @@ router.get('/', function(req, res, next) {
 			"coordinates": [0,0]
 		},
 		"details": "Bicycle",
-		"website": "https://github.com/emflex"
+		"website": "https://github.com/emflex",
+		"timestamp": null
 	};
 
 	function getTime() {
